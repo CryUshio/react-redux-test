@@ -1,0 +1,20 @@
+{
+    
+    "esversion":6,
+    
+    "freeze": true,
+    
+    "indent": false,
+    
+    "latedef": "nofunc",
+    
+    "newcap": true,
+    
+    "undef": true,
+    
+    "unused": true,
+    
+    "browser": true,
+    
+    "devel": true
+}
