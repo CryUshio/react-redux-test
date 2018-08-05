@@ -1,0 +1,104 @@
+.topbar {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 1em;
+    font-size: 16px;
+    color: #ffffff;
+    background: #373d41;
+    box-sizing: border-box;
+    
+    .logo {
+        display: inline-block;
+        font-size: 24px;
+    }
+    
+    .userarea {
+        position: absolute;
+        right: 0; top: 0;
+        display: inline-block;
+        min-width: 200px;
+        height: 50px;
+        white-space: nowrap;
+        text-align: right;
+        &_wrapper {
+            position: relative;
+            right: 1em;
+            display: inline-block;
+            height: 50px;
+        }
+    }
+    
+    .clock {
+        display: inline-block;
+        vertical-align: top;
+        width: 6em;
+        padding: 0 10px;
+        font-size: 14px;
+        text-align: center;
+        letter-spacing: .1em;
+    }
+    
+    
+    .username {
+        display: inline-block;
+        color: inherit;
+        font-size: 14px;
+        width: 8em;
+        /* padding-right: 1.1em; */
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    
+    .unfold {
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        width: 1.5em;
+        font-size: 16px;
+        transition: all .15s linear;
+        &_hover {
+            transform: rotate(180deg);
+        }
+    }
+    
+    .usermenu_wrapper {
+        position: absolute;
+        margin-top: -40px;
+        transition: all .15s cubic-bezier(0.28, 0.9, 1, 1.32);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+        &_show {
+            margin-top: -20px;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    
+    .usermenu {
+        margin-top: 3px;
+        width: 9.5em;
+        font-size: 14px;
+        border-radius: 3px;
+        text-align: center;
+        overflow: hidden;
+        box-sizing: border-box;
+        background: #373d41;
+        > ul > li {
+            height: 40px;
+            width: 100%;
+            line-height: 40px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            &:hover {
+                background: #202325;
+            }
+        }
+    }
+}    

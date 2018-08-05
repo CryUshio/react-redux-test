@@ -27,6 +27,7 @@
     "img-loader": "^3.0.0",
     "inline-chunk-manifest-html-webpack-plugin": "^2.0.0",
     "inline-manifest-webpack-plugin": "^4.0.1",
+    "jsx-control-statements": "^3.2.8",
     "less": "^3.8.0",
     "less-loader": "^4.1.0",
     "react-hot-loader": "^4.0.0",
