@@ -92,12 +92,7 @@ export default class Carousel extends React.Component {
     }
 
     getOffsetWidth() {
-        let offsetWidth = 0;
-        try {
-            offsetWidth = document.body.clientWidth;
-        } catch (error) {
-            console.log('Carousel init.');
-        }
+        let offsetWidth = document.body.clientWidth;
         console.log(offsetWidth);
         this.setState({ offsetWidth });
     }

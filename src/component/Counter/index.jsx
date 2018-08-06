@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { actionTypes } from '@/redux/actions/counter';
+import action from '@/redux/counter/action';
 import { connect } from 'react-redux';
 
 @connect(
@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
         counter: state.counter
     }),
     (dispatch) => ({
-        onIncrement: () => dispatch({ type: actionTypes.INCREMENT }),
-        onDecrement: () => dispatch({ type: actionTypes.DECREMENT }),
-        onReset: () => dispatch({ type: actionTypes.RESET }),
+        onIncrement: () => dispatch(action.increment()),
+        onDecrement: () => dispatch(action.decrement()),
+        onReset: () => dispatch(action.reset()),
     }) 
 )
 export default class Counter extends Component {
