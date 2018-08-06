@@ -26,55 +26,24 @@ export default class Carousel extends React.Component {
             src: img_5
         }],
         carouselOffset: 0,
+        offsetWidth: 0,
     };
 
-
-    componentDidMount() {
-        this.timerID = setInterval(() => {
-            this.setState((prevState) => {
-                if (prevState.carouselOffset + 1 == this.state.carouselList.length) {
-                    return {
-                        carouselOffset: 0
-                    };
-                }
-                return {
-                    carouselOffset: prevState.carouselOffset + 1
-                };
-            });
-        }, 6000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
-    gotoPosition(id) {
-        this.setState({
-            carouselOffset: id
-        });
-    }
-
     render() {
-        const { carouselList, carouselOffset } = this.state;
+        const { carouselList, carouselOffset, offsetWidth } = this.state;
         let lists = []
         for (let i = 0; i < carouselList.length; i++) {
             lists[i] = 0;
         }
 
-        let offsetWidth = 0;
-        try {
-            offsetWidth = this.carouselWrapper.offsetWidth;
-        } catch (error) {
-            console.log('Carousel init.');
-        }
 
         let carousel_offset = {
-            left: - this.state.carouselOffset * offsetWidth + 'px'
+            left: - carouselOffset * offsetWidth + 'px'
         };
 
         return (
             <div className='carousel'>
-                <div ref={(el) => this.carouselWrapper = el}
+                <div // ref={(el) => this.carouselWrapper = el}
                     className='carousel_wrapper'
                     style={carousel_offset}>
                     <For each='item' index='i' of={carouselList}>
@@ -95,5 +64,57 @@ export default class Carousel extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    UNSAFE_componentWillMount() {
+        this.getOffsetWidth();
+    }
+
+    componentDidMount() {
+        this.timerID = setInterval(() => {
+            this.setState((prevState) => {
+                if (prevState.carouselOffset + 1 == this.state.carouselList.length) {
+                    return {
+                        carouselOffset: 0
+                    };
+                }
+                return {
+                    carouselOffset: prevState.carouselOffset + 1
+                };
+            });
+        }, 6000);
+        window.addEventListener('resize', () => this.getOffsetWidth());
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+        window.removeEventListener('resize', () => this.getOffsetWidth());
+    }
+
+    getOffsetWidth() {
+        let offsetWidth = 0;
+        try {
+            offsetWidth = document.body.clientWidth;
+        } catch (error) {
+            console.log('Carousel init.');
+        }
+        console.log(offsetWidth);
+        this.setState({ offsetWidth });
+    }
+
+    onResize(time) {
+        let timer = null;
+        return () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                this.getOffsetWidth();
+            }, time);
+        }
+    }
+
+    gotoPosition(id) {
+        this.setState({
+            carouselOffset: id
+        });
     }
 }
