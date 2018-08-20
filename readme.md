@@ -1,1 +1,3 @@
-react redux test
+react redux test.
+  
+Just for personal learning.
