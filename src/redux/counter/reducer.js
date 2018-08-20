@@ -1,4 +1,5 @@
 import actionTypes from './action-types';
+import produce from 'immer';
 import { handleActions } from 'redux-actions';
 
 const initialState = {
@@ -19,18 +20,20 @@ const initialState = {
 // }
 
 const counter = handleActions({
-    [actionTypes.INCREMENT]: (state, action) => {
-        console.log(action);
-        return { ...state, count: state.count + 1 };
-    },
+    [actionTypes.INCREMENT]: produce((draft, { payload }) => {
+        draft[payload.key] = draft.count + 1;
+    }),
     [actionTypes.DECREMENT]: (state, action) => {
-        console.log(action);
-        return { ...state, count: state.count - 1 };
+        const res = produce((draft, { payload }) => {
+            draft['count'] = draft.count - 1;
+        });
+        const result = res(state, action);
+        console.log(result);
+        return result;
     },
-    [actionTypes.RESET]: (state, action) => {
-        console.log(action);
-        return { ...state, ...action.payload };
-    }
+    [actionTypes.RESET]: produce((draft, { payload }) => {
+        draft[payload.key] = payload.value;
+    }),
 }, initialState);
 
 export default counter;

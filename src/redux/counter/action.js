@@ -21,11 +21,18 @@ import { createAction } from 'redux-actions';
 //     }
 // }
 
-const increment = createAction(actionTypes.INCREMENT);
+const increment = createAction(actionTypes.INCREMENT, (props) => {
+    return {
+        ...props,
+        key: 'count'
+    }
+});
 const decrement = createAction(actionTypes.DECREMENT);
 const reset = createAction(actionTypes.RESET, () => {
-    const count = 0;
-    return { count };
+    return {
+        key: 'count',
+        value: 0
+    };
 });
 
 export default {

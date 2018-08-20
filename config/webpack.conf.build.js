@@ -6,18 +6,14 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
     entry: {
-        entry: [
-            'webpack-hot-middleware/client?reload=true',
-            path.join(__dirname, '../src/index.jsx')
-        ]
+        entry: path.join(__dirname, '../src/index.jsx')  
     },
     output: {
         publicPath: '/',
         path: path.join(__dirname, '../dist'),
         filename: 'bundle.js'
     },
-    devtool: '#source-map',
-    mode: 'development',
+    mode: 'production',
     resolve: {
         extensions: ['.js', '.jsx'],
         alias: {
@@ -32,13 +28,25 @@ module.exports = {
             },
             {
                 test: /\.(jpe?g|png|gif|svg)/i,
-                use: {
+                use: [{
                     loader: 'url-loader',
                     options: {
                         limit: 1024,
                         name: 'img/[name].[hash:8].[ext]'
                     }
-                }
+                }, {
+                    loader: 'image-webpack-loader',
+                    options: {
+                        mozjpeg: {
+                            progressive: true,
+                            quality: 65
+                        },
+                        pngquant: {
+                            quality: '65-90',
+                            speed: 7
+                        },
+                    }
+                }],
             },
             {
                 test: /\.less$/,
@@ -62,18 +70,8 @@ module.exports = {
         hints: false
     },
     plugins: [
-        new webpack.DllReferencePlugin({
-            context: __dirname,
-            manifest: require(path.join(__dirname, '../dist/dll', 'dll-manifest.json'))
-        }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, '../index.html'),
-        }),
-        new HtmlWebpackIncludeAssetsPlugin({
-            assets: ['dll/vendors.dll.js'],
-            append: false,
-            publicPath: '',
-            hash: false
         }),
         new webpack.HotModuleReplacementPlugin(),
         new FriendlyErrorsPlugin()
